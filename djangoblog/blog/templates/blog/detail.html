@@ -1,0 +1,34 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% if post %}
+        <a class="btn btn-outline-info" href="{% url 'blog-home' %}">Back</a>
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <span class="mr-2" >{{ post.author }}</span>
+              <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <h2 class="article-title">{{ post.title }}</h2>
+              </div>
+              {% if user.is_authenticated %}
+                  {% if edit == True %}
+                    <div class="col-md-6" align="right">
+                        <a  href="{% url 'blog-edit' pk=post.pk %}"><i class='fas fa-edit'></i></a>
+                        <a  href="{% url 'blog-delete' pk=post.pk %}"><i class="material-icons">&#xe872;</i></a>
+
+                    </div>
+                  {% endif %}
+              {% endif %}
+            </div>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% else %}
+          <div class="media-body" style="font-variant-caps:petite-caps">
+              <h5>Blog's Not Available....</h5>
+          </div>
+    {% endif %}
+{% endblock content %}
